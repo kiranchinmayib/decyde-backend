@@ -19,11 +19,23 @@ app.post("/compare", (req, res) => {
   }
 
   res.json({
-    cheapest: { app: "Zepto", estimate: "₹240" },
-    fastest: { app: "Blinkit", estimate: "15 mins" },
-    best_balance: { app: "Instamart", estimate: "₹255 • 20 mins" },
-    confidence: "low"
-  });
+  cheapest: {
+    app: "Zepto",
+    estimate: "₹240",
+    explanation: "Based on recent price trends"
+  },
+  fastest: {
+    app: "Blinkit",
+    estimate: "15 mins",
+    explanation: "Closest delivery partner available"
+  },
+  best_balance: {
+    app: "Instamart",
+    estimate: "₹255 • 20 mins",
+    explanation: "Balanced price and delivery time"
+  },
+  confidence: "low"
 });
+
 
 app.listen(process.env.PORT || 3000);
