@@ -36,6 +36,7 @@ app.post("/compare", (req, res) => {
   },
   confidence: "low"
 });
+});
 
 
 app.listen(process.env.PORT || 3000);
