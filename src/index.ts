@@ -61,7 +61,7 @@ app.post("/compare", async (c) => {
     return c.json({ error: "items + pincode required" }, 400);
   }
 
-  return c.json({
+return c.json({
   confidence: "low",
   cheapest: {
     app: "Zepto",
@@ -78,6 +78,7 @@ app.post("/compare", async (c) => {
     estimate: "₹255 • 20 mins",
     explanation: "Balanced price and delivery time"
   }
+});
 });
 
 /* START SERVER */
