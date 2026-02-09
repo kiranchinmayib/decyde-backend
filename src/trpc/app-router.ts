@@ -1,7 +1,8 @@
-import { createTRPCRouter } from "./create-context";
-import { coverageRouter } from "./routes/coverage";
-import { compareRouter } from "./routes/compare";
-import { adminRouter } from "./routes/admin";
+import { createTRPCRouter } from "./create-context.js";
+import { createContext } from "./create-context.js";
+import { coverageRouter } from "./routes/coverage.js";
+import { compareRouter } from "./routes/compare.js";
+import { adminRouter } from "./routes/admin.js";
 
 export const appRouter = createTRPCRouter({
   coverage: coverageRouter,

@@ -1,7 +1,6 @@
 {
   "name": "decyde-backend",
-  "version": "1.0.0",
-  "type": "module",
+  "version": "1.0.0"
 
 "scripts": {
   "build": "tsc",

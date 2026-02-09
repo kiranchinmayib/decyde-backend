@@ -2,8 +2,8 @@ import { trpcServer } from "@hono/trpc-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-import { appRouter } from "./trpc/app-router";
-import { createContext } from "./trpc/create-context";
+import { appRouter } from "./trpc/app-router.js";
+import { createContext } from "./trpc/create-context.js";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.EXPO_PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY || process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
