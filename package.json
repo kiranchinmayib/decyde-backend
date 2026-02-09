@@ -18,5 +18,10 @@
     "typescript": "^5.3.3",
     "ts-node": "^10.9.2",
     "@types/node": "^20.10.5"
-  }
+  },
+  
+  "dependencies": {
+  "superjson": "^2.2.1"
+}
+
 }
