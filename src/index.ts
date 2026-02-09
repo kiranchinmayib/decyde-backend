@@ -23,28 +23,20 @@ app.get("/health", (c) => {
 });
 
 /* Coverage */
-app.get("/coverage", async (c) => {
-  const pincode = c.req.query("pincode");
+app.get("/coverage", (req, res) => {
+  const { pincode } = req.query;
 
   if (!pincode) {
-    return c.json({ error: "pincode required" }, 400);
+    return res.status(400).json({ error: "pincode required" });
   }
 
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    return c.json({
-      partners: ["Zepto", "Blinkit", "Instamart"]
-    });
-  }
-
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/partner_coverage?pincode=eq.${pincode}&active=eq.true`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`
-      }
-    }
-  );
+  res.json({
+    pincode: String(pincode),
+    city: "Bangalore",
+    state: "Karnataka",
+    partners: ["Zepto", "Blinkit", "Instamart"]
+  });
+});
 
   const data = await res.json();
 
