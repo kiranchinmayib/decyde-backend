@@ -38,10 +38,6 @@ app.get("/coverage", (req, res) => {
   });
 });
 
-  const data = await res.json();
-
-  return c.json({ data });
-});
 
 /* Compare */
 app.post("/compare", async (c) => {
