@@ -6,7 +6,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* Health */
+// ✅ HEALTH CHECK (CRITICAL)
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+// Root
 app.get("/", (req, res) => {
   res.send("Decyde Backend Running");
 });
