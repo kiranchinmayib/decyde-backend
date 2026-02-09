@@ -9,7 +9,7 @@ app.use("*", cors());
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
 
-/* Health */
+/* Root */
 app.get("/", (c) => {
   return c.json({
     status: "ok",
@@ -17,6 +17,7 @@ app.get("/", (c) => {
   });
 });
 
+/* Health */
 app.get("/health", (c) => {
   return c.json({ ok: true });
 });
@@ -29,26 +30,14 @@ app.get("/coverage", async (c) => {
     return c.json({ error: "pincode required" }, 400);
   }
 
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    return c.json({
-      partners: ["Zepto", "Blinkit", "Instamart"]
-    });
-  }
-
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/partner_coverage?pincode=eq.${pincode}&active=eq.true`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`
-      }
-    }
-  );
-
-  const data = await res.json();
-
-  return c.json({ data });
+  return c.json({
+    pincode,
+    city: "Bangalore",
+    state: "Karnataka",
+    partners: ["Zepto", "Blinkit", "Instamart"],
+  });
 });
+
 
 /* Compare */
 app.post("/compare", async (c) => {
@@ -71,7 +60,7 @@ app.post("/compare", async (c) => {
 /* START SERVER */
 const port = Number(process.env.PORT || 3000);
 
-console.log("Starting server on port", port);
+console.log("Starting Decyde server on port", port);
 
 serve({
   fetch: app.fetch,
