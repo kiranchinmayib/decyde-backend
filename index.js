@@ -5,20 +5,24 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Health check
+// Health check - Render pings this
+app.get("/health", (req, res) => {
+res.status(200).json({ status: "ok" });
+});
+
 app.get("/", (req, res) => {
-  res.send("Decyde Backend Running");
+res.send("Decyde Backend Running");
 });
 
 // Compare endpoint
 app.post("/compare", (req, res) => {
-  const { items } = req.body;
+const { items } = req.body;
 
-  if (!items || items.length === 0) {
-    return res.status(400).json({ error: "No items provided" });
-  }
+if (!items || items.length === 0) {
+  return res.status(400).json({ error: "No items provided" });
+}
 
-  res.json({
+res.json({
   cheapest: {
     app: "Zepto",
     estimate: "₹240",
@@ -38,5 +42,7 @@ app.post("/compare", (req, res) => {
 });
 });
 
-
-app.listen(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, "0.0.0.0", () => {
+console.log(`Server running on port ${PORT}`);
+});
