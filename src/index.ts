@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { serve } from "@hono/node-server";
 
 const app = new Hono();
 
@@ -67,10 +68,12 @@ app.post("/compare", async (c) => {
   });
 });
 
-/* Start */
+/* START SERVER */
 const port = Number(process.env.PORT || 3000);
 
-export default {
-  port,
-  fetch: app.fetch
-};
+console.log("Starting server on port", port);
+
+serve({
+  fetch: app.fetch,
+  port
+});
