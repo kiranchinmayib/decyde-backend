@@ -1,25 +1,14 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
-import { serve } from "@hono/node-server";
+import express from "express";
+import cors from "cors";
 
-const app = new Hono();
+const app = express();
 
-app.use("*", cors());
-
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
-
-/* Root */
-app.get("/", (c) => {
-  return c.json({
-    status: "ok",
-    message: "Decyde API running"
-  });
-});
+app.use(cors());
+app.use(express.json());
 
 /* Health */
-app.get("/health", (c) => {
-  return c.json({ ok: true });
+app.get("/", (req, res) => {
+  res.send("Decyde Backend Running");
 });
 
 /* Coverage */
@@ -34,47 +23,40 @@ app.get("/coverage", (req, res) => {
     pincode: String(pincode),
     city: "Bangalore",
     state: "Karnataka",
-    partners: ["Zepto", "Blinkit", "Instamart"]
+    partners: ["Zepto", "Blinkit", "Instamart"],
   });
 });
 
-
 /* Compare */
-app.post("/compare", async (c) => {
-  const body = await c.req.json();
+app.post("/compare", (req, res) => {
+  const { items } = req.body;
 
-  const { items, pincode } = body;
-
-  if (!items || !pincode) {
-    return c.json({ error: "items + pincode required" }, 400);
+  if (!items || items.length === 0) {
+    return res.status(400).json({ error: "No items provided" });
   }
 
-return c.json({
-  confidence: "low",
-  cheapest: {
-    app: "Zepto",
-    estimate: "₹240",
-    explanation: "Based on recent price trends"
-  },
-  fastest: {
-    app: "Blinkit",
-    estimate: "15 mins",
-    explanation: "Closest delivery partner available"
-  },
-  best_balance: {
-    app: "Instamart",
-    estimate: "₹255 • 20 mins",
-    explanation: "Balanced price and delivery time"
-  }
+  res.json({
+    cheapest: {
+      app: "Zepto",
+      estimate: "₹240",
+      explanation: "Based on recent price trends",
+    },
+    fastest: {
+      app: "Blinkit",
+      estimate: "15 mins",
+      explanation: "Closest delivery partner available",
+    },
+    best: {
+      app: "Instamart",
+      estimate: "₹255 • 20 mins",
+      explanation: "Balanced price and delivery time",
+    },
+    confidence: "low",
+  });
 });
-});
 
-/* START SERVER */
-const port = Number(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
 
-console.log("Starting Decyde server on port", port);
-
-serve({
-  fetch: app.fetch,
-  port
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
 });
